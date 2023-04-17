@@ -1,7 +1,7 @@
 import React from 'react';
 
 interface ListProps {
-  children: JSX.Element
+  children: React.ReactNode
 }
 
 function ToDoList({ children }: ListProps): JSX.Element {

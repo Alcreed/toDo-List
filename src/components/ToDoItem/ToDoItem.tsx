@@ -1,8 +1,12 @@
 import React from 'react';
 
-function ToDoItem(): JSX.Element {
+interface ItemProps {
+  item: { text: string, completed: boolean }
+}
+
+function ToDoItem({ item }: ItemProps): JSX.Element {
   return (
-    <></>
+    <li>{item.text}</li>
   )
 }
 
