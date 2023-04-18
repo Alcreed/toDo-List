@@ -17,13 +17,17 @@ function App(): JSX.Element {
   return (
     <main className='ToDo_container'>
       <section className='ToDo_section'>
-        <h2>Create new task</h2>
-        <ToDoInput
-          className='ToDo_input'
-          placeholder='Create new task'
-          onChange={(e) => console.log(e.target.value)}
-        />
-        <CreateToDoButton />
+        <article className='ToDo_section_create'>
+          <h2 className='ToDo_section_create-title'>Create new task</h2>
+          <ToDoInput
+            className='ToDo_input'
+            placeholder='Create new task'
+            onChange={(e) => console.log(e.target.value)}
+          />
+          <CreateToDoButton
+            className='CreateToDo_button'
+          />
+        </article>
       </section>
       <section className='ToDo_section'>
         <ToDoCounter />
