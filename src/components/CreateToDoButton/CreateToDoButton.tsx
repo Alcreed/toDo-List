@@ -1,8 +1,10 @@
 import React from 'react';
 
+import './CreateToDoButton.css';
+
 function CreateToDoButton(): JSX.Element {
   return (
-    <button>+</button>
+    <button className='CreateToDo_button'>Create</button>
   )
 }
 
