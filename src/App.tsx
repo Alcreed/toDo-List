@@ -7,7 +7,7 @@ import { CreateToDoButton } from './components/CreateToDoButton/CreateToDoButton
 import './App.css';
 
 const toDoList = [
-  { id: 0, text: 'Tarea 1', completed: false },
+  { id: 0, text: 'Tarea 1', completed: true },
   { id: 1, text: 'Tarea 2', completed: false },
   { id: 2, text: 'Tarea 3', completed: false },
   { id: 3, text: 'Tarea 4', completed: false },
@@ -30,24 +30,26 @@ function App(): JSX.Element {
         </article>
       </section>
       <section className='ToDo_section'>
-        <ToDoCounter />
-        <ToDoInput
-          className='ToDo_input'
-          placeholder='Search a task'
-          onChange={(e) => console.log(e.target.value)}
-        />
-        <ToDoList>
-          {toDoList.length > 0 &&
-            toDoList.map(item => {
-              return (
-                <ToDoItem
-                  key = {item.id}
-                  item = {item}
-                />
-              )
-            })
-          }
-        </ToDoList>
+        <article className='ToDo_section_list'>
+          <ToDoCounter />
+          <ToDoInput
+            className='ToDo_input'
+            placeholder='Search a task'
+            onChange={(e) => console.log(e.target.value)}
+          />
+          <ToDoList>
+            {toDoList.length > 0 &&
+              toDoList.map(item => {
+                return (
+                  <ToDoItem
+                    key = {item.id}
+                    item = {item}
+                  />
+                )
+              })
+            }
+          </ToDoList>
+        </article>
       </section>
     </main>
   );

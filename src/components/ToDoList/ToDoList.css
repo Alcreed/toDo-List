@@ -1,0 +1,54 @@
+.ToDoList_container {
+  height: 100%;
+  padding: 0px 5px 0px 10px;
+  overflow-y: scroll;
+}
+
+.ToDoList_container::-webkit-scrollbar {
+  width: 5px;
+}
+
+.ToDoList_container::-webkit-scrollbar-thumb {
+  background-color: #cecece;
+  border-radius: 4px;
+}
+
+.ToDoItem_container {
+  width: 100%;
+  display: flex;
+  align-items: center;
+  position: relative;
+  background-color: rgb(255, 255, 255);;
+  border-radius: 5px;
+  margin: 0px 0px 15px;
+  padding: 20px;
+}
+
+.ToDoItem_container img {
+  width: 25px;
+  height: 25px;
+  cursor: pointer;
+}
+
+.ToDoItem_task {
+  flex: 1;
+  font-size: 2.5rem;
+  font-weight: bold;
+  color: #008e9b;
+}
+
+.ToDoItem_task.completed {
+  text-decoration: line-through;
+}
+
+.ToDoItem_check {
+  margin: 0px 10px 0px 0px;
+}
+
+.ToDoItem_delete {
+  visibility: hidden;
+}
+
+.ToDoItem_container:hover .ToDoItem_delete {
+  visibility: visible;
+}
