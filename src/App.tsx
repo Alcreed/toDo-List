@@ -14,6 +14,15 @@ const toDoList = [
 ]
 
 function App(): JSX.Element {
+
+  const onCreateTask = (value: string) => {
+    console.log(value);
+  };
+
+  const onSearchTask = (value: string) => {
+    console.log(value);
+  };
+
   return (
     <main className='ToDo_container'>
       <section className='ToDo_section'>
@@ -22,11 +31,9 @@ function App(): JSX.Element {
           <ToDoInput
             className='ToDo_input'
             placeholder='Create new task'
-            onChange={(e) => console.log(e.target.value)}
+            onChange={(e) => onCreateTask(e.target.value)}
           />
-          <CreateToDoButton
-            className='CreateToDo_button'
-          />
+          <CreateToDoButton />
         </article>
       </section>
       <section className='ToDo_section'>
@@ -35,7 +42,7 @@ function App(): JSX.Element {
           <ToDoInput
             className='ToDo_input'
             placeholder='Search a task'
-            onChange={(e) => console.log(e.target.value)}
+            onChange={(e) => onSearchTask(e.target.value)}
           />
           <ToDoList>
             {toDoList.length > 0 &&

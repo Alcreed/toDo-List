@@ -11,11 +11,32 @@ interface ItemProps {
 }
 
 function ToDoItem({ item }: ItemProps): JSX.Element {
+
+  const onComplete = () => {
+    alert('complete')
+  };
+
+  const onDelete = () => {
+    alert('delete')
+  };
+
   return (
     <div className='ToDoItem_container'>
-      <img className='ToDoItem_check' src={item.completed ? Completed : Check} alt="Estado tarea" />
+      <img
+        className='ToDoItem_check'
+        src={item.completed ? Completed : Check}
+        alt="Estado tarea"
+        onClick={() => onComplete()}
+      />
+
       <p className={`ToDoItem_task ${item.completed ? 'completed' : ''}`}>{item.text}</p>
-      <img className='ToDoItem_delete' src={Delete} alt="Borrar tarea" />
+
+      <img
+        className='ToDoItem_delete'
+        src={Delete}
+        alt="Borrar tarea"
+        onClick={() => onDelete()}
+      />
     </div>
   )
 }

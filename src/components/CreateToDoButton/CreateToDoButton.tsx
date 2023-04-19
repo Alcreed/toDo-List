@@ -1,12 +1,20 @@
 import React from 'react';
 
-import type { ButtonHTMLAttributes } from 'react';
-
 import './CreateToDoButton.css';
 
-function CreateToDoButton({ ...buttonProps }: ButtonHTMLAttributes<HTMLButtonElement>): JSX.Element {
+function CreateToDoButton(): JSX.Element {
+
+  const createTask = (message: string) => {
+    alert(message);
+  };
+
   return (
-    <button {...buttonProps}>Create</button>
+    <button
+      className='CreateToDo_button'
+      onClick={() => createTask('Creaste una tarea')}
+    >
+      Create
+    </button>
   )
 }
 
