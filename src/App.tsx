@@ -1,26 +1,35 @@
-import React from 'react';
+import React, { useState } from 'react';
+
 import { ToDoCounter } from './components/ToDoCounter/ToDoCounter';
 import { ToDoInput } from './components/ToDoInput/ToDoInput';
 import { ToDoList } from './components/ToDoList/ToDoList';
 import { ToDoItem } from './components/ToDoItem/ToDoItem';
 import { CreateToDoButton } from './components/CreateToDoButton/CreateToDoButton';
+
 import './App.css';
 
-const toDoList = [
-  { id: 0, text: 'Tarea 1', completed: true },
-  { id: 1, text: 'Tarea 2', completed: false },
-  { id: 2, text: 'Tarea 3', completed: false },
-  { id: 3, text: 'Tarea 4', completed: false },
-]
+interface ITask {
+  id: number,
+  text: string,
+  completed: boolean
+}
 
 function App(): JSX.Element {
+
+  const [searchTask, setSearchTask] = useState<string>("");
+  const [toDoList, setToDoList] = useState<ITask[]>([
+    { id: 0, text: 'Tarea 1', completed: true },
+    { id: 1, text: 'Tarea 2', completed: false },
+    { id: 2, text: 'Tarea 3', completed: false },
+    { id: 3, text: 'Tarea 4', completed: false },
+  ]);
 
   const onCreateTask = (value: string) => {
     console.log(value);
   };
 
-  const onSearchTask = (value: string) => {
-    console.log(value);
+  const filterTasks = (item: ITask): boolean => {
+    return (item.text).toLowerCase().includes(searchTask.toLowerCase());
   };
 
   return (
@@ -42,11 +51,11 @@ function App(): JSX.Element {
           <ToDoInput
             className='ToDo_input'
             placeholder='Search a task'
-            onChange={(e) => onSearchTask(e.target.value)}
+            onChange={(e) => setSearchTask(e.target.value)}
           />
           <ToDoList>
             {toDoList.length > 0 &&
-              toDoList.map(item => {
+              toDoList.filter(item => filterTasks(item)).map(item => {
                 return (
                   <ToDoItem
                     key = {item.id}
