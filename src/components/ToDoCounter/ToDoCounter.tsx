@@ -2,9 +2,14 @@ import React from 'react';
 
 import './ToDoCounter.css';
 
-function ToDoCounter(): JSX.Element {
+interface IToDoCounterProps {
+  completedToDo: number,
+  total: number
+}
+
+function ToDoCounter({ completedToDo, total }: IToDoCounterProps): JSX.Element {
   return (
-    <h2 className='ToDoCounter'>Has completado 2 de 3 ToDo's</h2>
+    <h2 className='ToDoCounter'>{`Has completado ${completedToDo} de ${total} ToDo's`}</h2>
   );
 }
 

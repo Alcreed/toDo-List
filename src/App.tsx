@@ -24,6 +24,9 @@ function App(): JSX.Element {
     { id: 3, text: 'Tarea 4', completed: false },
   ]);
 
+  const completedToDoList = toDoList.filter(toDo => toDo.completed).length;
+  const totalToDoList = toDoList.length;
+
   const onCreateTask = (value: string) => {
     console.log(value);
   };
@@ -47,7 +50,10 @@ function App(): JSX.Element {
       </section>
       <section className='ToDo_section'>
         <article className='ToDo_section_list'>
-          <ToDoCounter />
+          <ToDoCounter
+            completedToDo={completedToDoList}
+            total={totalToDoList}
+          />
           <ToDoInput
             className='ToDo_input'
             placeholder='Search a task'
