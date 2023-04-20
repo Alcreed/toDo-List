@@ -35,6 +35,23 @@ function App(): JSX.Element {
     return (item.text).toLowerCase().includes(searchTask.toLowerCase());
   };
 
+  const onComplete = (id: number) => {
+    let newTodoList = toDoList.map(toDo => {
+      if (toDo.id === id) {
+        return { ...toDo, completed: toDo.completed ? false : true }
+      } else {
+        return toDo
+      }
+    });
+
+    setToDoList(newTodoList);
+  };
+
+  const onDelete = (id: number) => {
+    let deleteFromTodoList = toDoList.filter(toDo => toDo.id !== id);
+    setToDoList(deleteFromTodoList);
+  };
+
   return (
     <main className='ToDo_container'>
       <section className='ToDo_section'>
@@ -66,6 +83,8 @@ function App(): JSX.Element {
                   <ToDoItem
                     key = {item.id}
                     item = {item}
+                    onComplete = {() => onComplete(item.id)}
+                    onDelete = {() => onDelete(item.id)}
                   />
                 )
               })
