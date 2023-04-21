@@ -16,13 +16,13 @@ interface ITask {
 
 function App(): JSX.Element {
 
+  const localStorageToDo: (string | null) = localStorage.getItem('toDoList_V1');
+  let parsedToDoList: ITask[] = localStorageToDo ? JSON.parse(localStorageToDo) : [];
+
+  if (!localStorageToDo) localStorage.setItem('toDoList_V1', JSON.stringify([]));
+
   const [searchTask, setSearchTask] = useState<string>("");
-  const [toDoList, setToDoList] = useState<ITask[]>([
-    { id: 0, text: 'Tarea 1', completed: true },
-    { id: 1, text: 'Tarea 2', completed: false },
-    { id: 2, text: 'Tarea 3', completed: false },
-    { id: 3, text: 'Tarea 4', completed: false },
-  ]);
+  const [toDoList, setToDoList] = useState<ITask[]>(parsedToDoList);
 
   const completedToDoList = toDoList.filter(toDo => toDo.completed).length;
   const totalToDoList = toDoList.length;
@@ -35,6 +35,11 @@ function App(): JSX.Element {
     return (item.text).toLowerCase().includes(searchTask.toLowerCase());
   };
 
+  const saveToDoList = (newTodoList: ITask[]): void => {
+    localStorage.setItem('toDoList_V1', JSON.stringify(newTodoList));
+    setToDoList(newTodoList);
+  };
+
   const onComplete = (id: number) => {
     let newTodoList = toDoList.map(toDo => {
       if (toDo.id === id) {
@@ -44,12 +49,12 @@ function App(): JSX.Element {
       }
     });
 
-    setToDoList(newTodoList);
+    saveToDoList(newTodoList);
   };
 
   const onDelete = (id: number) => {
     let deleteFromTodoList = toDoList.filter(toDo => toDo.id !== id);
-    setToDoList(deleteFromTodoList);
+    saveToDoList(deleteFromTodoList);
   };
 
   return (
