@@ -14,6 +14,30 @@ interface ITask {
   completed: boolean
 }
 
+/* -- Custom hook
+  type ItemHook = 'toDoList_V1';
+
+  function useLocalStorage(itemName: ItemHook, initialValue: unknown) {
+
+    const localStorageItem: (string | null) = localStorage.getItem(itemName);
+    let parsedItem: ITask[] = localStorageItem ? JSON.parse(localStorageItem) : [];
+
+    if (!localStorageItem) localStorage.setItem(itemName, JSON.stringify(initialValue));
+
+    const [item, setItem] = useState<ITask[]>(parsedItem);
+
+    const saveItemList = (newItemList: ITask[]): void => {
+      localStorage.setItem(itemName, JSON.stringify(newItemList));
+      setItem(newItemList);
+    };
+
+    return [
+      item,
+      saveItemList
+    ];
+  }
+*/
+
 function App(): JSX.Element {
 
   const localStorageToDo: (string | null) = localStorage.getItem('toDoList_V1');
@@ -21,6 +45,7 @@ function App(): JSX.Element {
 
   if (!localStorageToDo) localStorage.setItem('toDoList_V1', JSON.stringify([]));
 
+  // const [toDoList, saveToDoList] = useLocalStorage('toDoList_V1', []);
   const [searchTask, setSearchTask] = useState<string>("");
   const [toDoList, setToDoList] = useState<ITask[]>(parsedToDoList);
 
