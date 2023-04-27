@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 
 import { ToDoCounter } from './components/ToDoCounter/ToDoCounter';
 import { ToDoInput } from './components/ToDoInput/ToDoInput';
@@ -18,39 +18,69 @@ interface ITask {
   type ItemHook = 'toDoList_V1';
 
   function useLocalStorage(itemName: ItemHook, initialValue: unknown) {
+    const [loading, setLoading] = useState<boolean>(true);
+    const [error, setError] = useState<boolean>(false);
+    const [item, setItem] = useState<ITask[]>(initialValue);
 
-    const localStorageItem: (string | null) = localStorage.getItem(itemName);
-    let parsedItem: ITask[] = localStorageItem ? JSON.parse(localStorageItem) : [];
+    useEffect(() => {
+      setTimeout(() => {
+        try {
+          const localStorageItem: (string | null) = localStorage.getItem(itemName);
+          let parsedItem: ITask[] = localStorageItem ? JSON.parse(localStorageItem) : [];
 
-    if (!localStorageItem) localStorage.setItem(itemName, JSON.stringify(initialValue));
+          if (!localStorageItem) localStorage.setItem(itemName, JSON.stringify(initialValue));
 
-    const [item, setItem] = useState<ITask[]>(parsedItem);
+          setItem(parsedItem);
+          setLoadin(false);
+        } catch (error) {
+          setError(error);
+        }
+      }, 1000)
 
-    const saveItemList = (newItemList: ITask[]): void => {
-      localStorage.setItem(itemName, JSON.stringify(newItemList));
-      setItem(newItemList);
-    };
+      const saveItemList = (newItemList: ITask[]): void => {
+        try {
+          localStorage.setItem(itemName, JSON.stringify(newItemList));
+          setItem(newItemList);
+        } catch(error) {
+          setError(true);
+        }
+      };
 
-    return [
-      item,
-      saveItemList
-    ];
+      return {
+        item,
+        saveItemList,
+        loading,
+        error
+      };
+    }, [])
   }
 */
 
 function App(): JSX.Element {
-
-  const localStorageToDo: (string | null) = localStorage.getItem('toDoList_V1');
-  let parsedToDoList: ITask[] = localStorageToDo ? JSON.parse(localStorageToDo) : [];
-
-  if (!localStorageToDo) localStorage.setItem('toDoList_V1', JSON.stringify([]));
-
-  // const [toDoList, saveToDoList] = useLocalStorage('toDoList_V1', []);
+  // const {toDoList, saveToDoList, loading, error} = useLocalStorage('toDoList_V1', []);
   const [searchTask, setSearchTask] = useState<string>("");
-  const [toDoList, setToDoList] = useState<ITask[]>(parsedToDoList);
+  const [toDoList, setToDoList] = useState<ITask[]>([]);
+  const [loading, setLoading] = useState<boolean>(true);
+  const [error, setError] = useState<boolean>(false);
 
   const completedToDoList = toDoList.filter(toDo => toDo.completed).length;
   const totalToDoList = toDoList.length;
+
+  useEffect(() => {
+    setTimeout(() => {
+      try {
+        const localStorageToDo: (string | null) = localStorage.getItem('toDoList_V1');
+        let parsedToDoList: ITask[] = localStorageToDo ? JSON.parse(localStorageToDo) : [];
+
+        if (!localStorageToDo) localStorage.setItem('toDoList_V1', JSON.stringify([]));
+
+        setToDoList(parsedToDoList);
+        setLoading(false);
+      } catch (error) {
+        setError(true);
+      }
+    }, 1000);
+  }, [totalToDoList]);
 
   const onCreateTask = (value: string) => {
     console.log(value);
@@ -61,8 +91,12 @@ function App(): JSX.Element {
   };
 
   const saveToDoList = (newTodoList: ITask[]): void => {
-    localStorage.setItem('toDoList_V1', JSON.stringify(newTodoList));
-    setToDoList(newTodoList);
+    try {
+      localStorage.setItem('toDoList_V1', JSON.stringify(newTodoList));
+      setToDoList(newTodoList);
+    } catch(error) {
+      setError(true);
+    }
   };
 
   const onComplete = (id: number) => {
@@ -107,6 +141,10 @@ function App(): JSX.Element {
             onChange={(e) => setSearchTask(e.target.value)}
           />
           <ToDoList>
+            {error && <p>Error</p>}
+            {loading && <p>Loading...</p>}
+            {(!loading && !toDoList.length) && <p>Crea tu primera tarea</p>}
+
             {toDoList.length > 0 &&
               toDoList.filter(item => filterTasks(item)).map(item => {
                 return (
