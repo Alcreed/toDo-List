@@ -1,15 +1,19 @@
-import React from 'react';
+import React, { useContext } from 'react';
+import { ToDoContext } from '../../ToDoContext';
 
 import './ToDoCounter.css';
 
+// Actualizar tipado desde el context, acá no funciona
 interface IToDoCounterProps {
-  completedToDo: number,
-  total: number
+  completedToDoList: number,
+  totalToDoList: number
 }
 
-function ToDoCounter({ completedToDo, total }: IToDoCounterProps): JSX.Element {
+function ToDoCounter(): JSX.Element {
+  const { completedToDoList, totalToDoList }: IToDoCounterProps = useContext(ToDoContext);
+
   return (
-    <h2 className='ToDoCounter'>{`Has completado ${completedToDo} de ${total} ToDo's`}</h2>
+    <h2 className='ToDoCounter'>{`Has completado ${completedToDoList} de ${totalToDoList} ToDo's`}</h2>
   );
 }
 
