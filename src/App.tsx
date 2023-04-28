@@ -69,7 +69,7 @@ function App(): JSX.Element {
   //   saveToDoList(deleteFromTodoList);
   // };
 
-  const { error, loading, toDoList, setSearchTask, filterTasks, onComplete, onDelete } = useContext(ToDoContext);
+  const { error, loading, toDoList, setSearchTask, filterTasks, onComplete, onDelete, setCreateTaskText, onCreateTask, createTaskText } = useContext(ToDoContext);
 
   return (
     <main className='ToDo_container'>
@@ -79,9 +79,12 @@ function App(): JSX.Element {
           <ToDoInput
             className='ToDo_input'
             placeholder='Create new task'
-            // onChange={(e) => onCreateTask(e.target.value)}
+            value={createTaskText}
+            onChange={(e) => setCreateTaskText(e.target.value)}
           />
-          <CreateToDoButton />
+          <CreateToDoButton
+            onClick={onCreateTask}
+          />
         </article>
       </section>
       <section className='ToDo_section'>

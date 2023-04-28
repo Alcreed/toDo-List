@@ -6,29 +6,29 @@ const ToDoContext = React.createContext();
 function ToDoProvider({ children }) {
   const {item: toDoList, saveItemList: saveToDoList, loading, error} = useLocalStorage('toDoList_V1', []);
   const [searchTask, setSearchTask] = useState("");
+  const [createTaskText, setCreateTaskText] = useState("");
   // const [toDoList, setToDoList] = useState([]);
   // const [loading, setLoading] = useState(true);
   // const [error, setError] = useState(false);
 
+  const generateId = () => Math.random().toString(36).substring(2, 9);
   const completedToDoList = toDoList.filter(toDo => toDo.completed).length;
   const totalToDoList = toDoList.length;
 
-  const onCreateTask = (value) => {
-    console.log(value);
+  const onCreateTask = () => {
+    let createTask = {
+      id: generateId(),
+      text: createTaskText,
+      completed: false
+    };
+
+    saveToDoList([...toDoList, createTask]);
+    setCreateTaskText("");
   };
 
   const filterTasks = (item) => {
     return (item.text).toLowerCase().includes(searchTask.toLowerCase());
   };
-
-  // const saveToDoList = (newTodoList) => {
-  //   try {
-  //     localStorage.setItem('toDoList_V1', JSON.stringify(newTodoList));
-  //     setToDoList(newTodoList);
-  //   } catch(error) {
-  //     setError(true);
-  //   }
-  // };
 
   const onComplete = (id) => {
     let newTodoList = toDoList.map(toDo => {
@@ -59,7 +59,9 @@ function ToDoProvider({ children }) {
         filterTasks,
         setSearchTask,
         onComplete,
-        onDelete
+        onDelete,
+        setCreateTaskText,
+        createTaskText
       }}
     >
       {children}
