@@ -9,12 +9,6 @@ import { CreateToDoButton } from './components/CreateToDoButton/CreateToDoButton
 
 import './App.css';
 
-export interface ITask {
-  id: number,
-  text: string,
-  completed: boolean
-}
-
 function App(): JSX.Element {
   // // const {toDoList, saveToDoList, loading, error} = useLocalStorage('toDoList_V1', []);
   // const [searchTask, setSearchTask] = useState<string>("");
